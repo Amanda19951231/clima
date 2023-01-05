@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Main Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;display=swap&amp;subset=cyrillic'>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@mdi/font@3.x/css/materialdesignicons.min.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css'>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/vuetify@1.x/dist/vuetify.min.css'>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <a class="weatherwidget-io" href="https://forecast7.com/pt/n28d29n53d50/panambi/" data-label_1="PANAMBI" data-label_2="CLIMA" data-theme="original" >PANAMBI CLIMA</a>
+  <script>
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+  </script>
+<!-- Forms -->
+<div id="portal" class="digitalview-off">
+  <div id="app">
+    <v-app class="grey lighten-4">
+      <v-toolbar flat color="white" height="58px">
+        <v-toolbar-title class="headline font-weight-black">Estação Metereológica</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-items class="hidden-sm-and-down">
+          <v-btn flat class="text-none toolbar-button active">Histórico</v-btn>
+          <v-btn flat class="text-none toolbar-button">Gráficos</v-btn>
+        </v-toolbar-items>
+      </v-toolbar>
+      <v-container fluid pa-0>
+        <v-layout row fill-height nowrap>
+          <v-flex shrink>
+            <v-navigation-drawer stateless touchless floating value="true">
+              <v-list subheader>
+                <v-list-group prepend-icon="assignment_ind" value="true">
+                  <template v-slot:activator>
+              <v-list-tile>
+                <v-list-tile-title>Main Page</v-list-tile-title>
+              </v-list-tile>
+            </template>
+                </v-list-group>
+              </v-list>
+            </v-navigation-drawer>
+          </v-flex>
+          <v-flex grow pa-4>
+            <v-toolbar flat color="white">
+              <v-toolbar-title>Histórico do clima</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-text-field v-model="search" append-icon="search" label="Pesquisar"></v-text-field>
+            </v-toolbar>
+            <v-data-table :headers="headers" :items="desserts" :pagination.sync="pagination" :search="search" hide-actions>
+              <template v-slot:items="props">
+                <td class="text-xs-right">{{ props.item.dia }}</td>
+                <td class="text-xs-right">{{ props.item.hora }}</td>
+                <td class="text-xs-right">{{ props.item.temperatura }}</td>
+                <td class="text-xs-right">{{ props.item.umidade }}</td>
+                <td class="text-xs-right">{{ props.item.chuva }}</td>
+              </template>
+              <template v-slot:expand="props">
+                <v-card flat>
+                    <v-card-text>Peek-a-boo!</v-card-text>
+                </v-card>
+              </template>
+              <template v-slot:no-results>
+              <v-alert :value="true" color="error" icon="warning">
+                Sem resultados "{{ search }}" compatíveis.
+              </v-alert>
+               </template>
+            </v-data-table>
+            <div class="text-xs-center pt-2">
+              <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+            </div>
+            <template v-slot:items="props">
+                <script>
+                  let elemento = document.getElementById('desserts')
+                </script>
+            </template><br><br>
+            <div id="cont_0d0890030d6b336cc59c7c43a5ed19ba"><script type="text/javascript" async src="https://www.tempo.com/wid_loader/0d0890030d6b336cc59c7c43a5ed19ba"></script></div>
+            <canvas class="line-chart">
+
+            </canvas>
+            
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-app>
+  </div>
+</div>
+<!-- scripts -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>  
+<script src='https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/vuetify@1.x/dist/vuetify.js'></script>
+<script  src="./script.js"></script>
+<script  src="./chart.js"></script>
+<script>
+ var ctx = document.getElementsByClassName("line-chart");
+
+var chartGraph =  new Chart(ctx, {
+    type: "line",
+    data:{
+        labels:[
+          "00:00:00",
+          "01:00:00",
+          "02:00:00",
+          "03:00:00",
+          "04:00:00",
+          "05:00:00",
+          "06:00:00",
+          "07:00:00",
+          "08:00:00",
+          "09:00:00",
+          "10:00:00",
+          "11:00:00",
+          "12:00:00",
+          "13:00:00",
+          "14:00:00",
+          "15:00:00",
+          "16:00:00",
+          "17:00:00",
+          "18:00:00",
+          "19:00:00",
+          "20:00:00",
+          "21:00:00",
+          "22:00:00",
+          "23:00:00",
+        ],
+        datasets:[
+            {
+              label:"Temperatura (º)",
+              data:[
+                16, 16, 14.8, 15.4, 14.1, 13.2, 12.9, 12.5, 13.7, 16.6, 16.8, 17.9, 18, 17.9, 17.2, 17.5, 16.9, 17.2, 16.5, 15.9, 15.5, 15.8, 15.7, 16.3,	
+              ],
+              borderWidth: 6,
+              borderColor:'rgba(77,166,253,0.85)',
+              backgroundColor:'transparent',  
+            },
+            {
+              label:"Umidade (%)",
+              data:[
+                  82, 80, 83, 77, 82, 85, 86, 87, 84 ,73, 75, 72, 73, 77, 85,86, 89, 88,87, 88, 88, 87, 88, 84
+              ],
+              borderWidth: 6,
+              borderColor:'rgba(6,204,6,0.85)',
+              backgroundColor:'transparent',  
+            },
+            {
+              label:"Chuva (mm)",
+              data:[
+                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1, 0.1, 0.2, 1, 0.4, 0.5, 0, 1, 0, 0, 0, 0
+                  
+              ],
+              borderWidth: 6,
+              borderColor:'rgba(23,45,176,0.85)',
+              backgroundColor:'transparent',  
+            },
+        ],
+    },
+    
+    options: {
+            title: {
+              display: true,
+              fontSize: 20,
+              text: "Relatório do dia 14 de agosto de 2022",
+            },
+        }     
+})
+</script>
+<!-- scripts -->
+</body>
+</html>
